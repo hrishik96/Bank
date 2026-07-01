@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <div class="brand">
+    <div class="logo-stamp"><span>B</span></div>
+    <div class="brand-name">Bank Simulator</div>
+    <div class="brand-tag">A Beginner's Banking App</div>
+  </div>
+
+  <!-- ===== PORTAL SCREEN ===== -->
+  <section id="screen-portal" class="screen active">
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" data-tab="login" onclick="switchTab('login')">Log In</button>
+        <button class="tab" data-tab="signup" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- Login form -->
+      <div id="tab-login">
+        <h1 class="title">Welcome back</h1>
+        <p class="subtitle">Enter your account number and password.</p>
+        <div id="login-error" class="error-msg"></div>
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="field">
+            <label for="login-num">Account Number</label>
+            <input type="number" id="login-num" required>
+          </div>
+          <div class="field">
+            <label for="login-pass">Password</label>
+            <input type="number" id="login-pass" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+      </div>
+
+      <!-- Signup form -->
+      <div id="tab-signup" style="display:none;">
+        <h1 class="title">Open an account</h1>
+        <p class="subtitle">Choose an account number and password to get started.</p>
+        <div id="signup-error" class="error-msg"></div>
+        <form id="signup-form" onsubmit="handleSignup(event)">
+          <div class="field">
+            <label for="signup-num">Account Number</label>
+            <input type="number" id="signup-num" required>
+          </div>
+          <div class="field">
+            <label for="signup-pass">Password</label>
+            <input type="number" id="signup-pass" required>
+          </div>
+          <div class="field">
+            <label for="signup-score">Credit Score</label>
+            <input type="number" id="signup-score" min="300" max="900" required>
+            <div class="hint">300&ndash;900. A score of 600+ is required to use the account.</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-note">Tries remaining reset each time you return to the portal.</div>
+  </section>
+
+  <!-- ===== INELIGIBLE SCREEN ===== -->
+  <section id="screen-ineligible" class="screen">
+    <div class="card">
+      <h1 class="title">Not eligible &mdash; yet</h1>
+      <p class="subtitle">Your credit score is below 600, so this account can't access banking services right now.</p>
+      <button class="btn btn-ghost" onclick="exitToPortal()">Back to Portal</button>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD SCREEN ===== -->
+  <section id="screen-dashboard" class="screen">
+    <div class="card">
+      <div class="dash-header">
+        <div>
+          <div class="acct-label">Account</div>
+          <div class="acct-num" id="dash-acct-num">—</div>
+        </div>
+        <div class="score-badge" id="dash-score">Score —</div>
+      </div>
+
+      <div class="balance-panel">
+        <div class="bl-label">Available Balance</div>
+        <div class="bl-amount">₹<span id="dash-balance">0</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn" onclick="doCheckBalance()">Check Balance</button>
+        <button class="action-btn" onclick="openAmountModal('withdraw')">Withdraw</button>
+        <button class="action-btn" onclick="openAmountModal('deposit')">Deposit</button>
+        <button class="action-btn exit" onclick="exitToPortal()">Exit to Portal</button>
+      </div>
+
+      <div class="receipt" id="receipt-feed">
+        <div class="receipt-empty">No transactions yet — actions you take will print here.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Amount modal for withdraw/deposit -->
+<div class="overlay" id="amount-overlay">
+  <div class="modal">
+    <h1 class="title" id="modal-title">Withdraw</h1>
+    <div id="modal-error" class="error-msg"></div>
+    <form id="amount-form" onsubmit="handleAmountSubmit(event)">
+      <div class="field">
+        <label for="amount-input">Amount (₹)</label>
+        <input type="number" id="amount-input" min="1" required>
+      </div>
+      <button type="submit" class="btn btn-primary" id="modal-submit">Confirm</button>
+      <button type="button" class="btn btn-ghost" onclick="closeAmountModal()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
