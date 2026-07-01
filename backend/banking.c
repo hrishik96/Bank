@@ -116,12 +116,6 @@ for(int i=0;i<3;i++){
     i+=1;
     
   // if exited again show portal page ;
-
-
-
-
-
-
 }
 }
 
